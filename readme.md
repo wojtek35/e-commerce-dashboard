@@ -40,7 +40,7 @@ First create the build:
 yarn build
 ```
 
-Then start the serverL
+Then start the server:
 
 ```
 yarn start
