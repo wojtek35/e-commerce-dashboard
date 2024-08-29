@@ -33,25 +33,20 @@ const PDFDownloadButton: FC<IPDFDownloadButtonProps> = ({ product }) => {
   
       /**
        * The `body` parameter provides the data for each row in the table:
-       * - Each row contains the month, sales for that month, conversion rate, and average rating.
+       * - Each row contains the month, sales for that month, conversion rate, and ratings.
        * - Data is limited to 12 months.
        * - `MONTHS[index]` provides the month name.
-       * - Sales and conversion rate are taken from `product.sales` and `product.conversionRate`
-       * - Average rating is computed as the mean of `product.reviewTrends`.
        */
       autoTable(doc, {
         startY: 20,
-        head: [["Month", "Sales", "Conversion Rate", "Average Rating"]],
+        head: [["Month", "Sales", "Conversion Rate", "Rating"]],
         body: product.reviewTrends
           .slice(0, 12)
           .map((_, index) => [
             MONTHS[index],
             product.sales[index] || 0,
             product.conversionRate[index] || 0,
-            (
-              product.reviewTrends.reduce((a, b) => a + b, 0) /
-              product.reviewTrends.length
-            ).toFixed(1),
+            product.reviewTrends[index] || 0
           ]),
       });
   
