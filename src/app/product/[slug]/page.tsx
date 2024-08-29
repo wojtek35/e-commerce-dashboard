@@ -35,7 +35,7 @@ ChartJS.register(
   Legend
 );
 
-// Function imation a query that we would use to get product by slug
+// Function imitating a query that we would use to get product by slug
 function useGetProductBySlug(slug: string) {
   return products.find((product) => product.slug === slug) || null;
 }
@@ -77,6 +77,11 @@ export default function ProductDetailPage({
     },
   };
 
+  /**
+   * Function to format chart data
+   * Prepares the data structure required by the Chart.js Line component,
+   * including labels and datasets with labels, data points, border, and background colors.
+   */
   const getChartData = (data: number[], label: string, color: string) => ({
     labels: MONTHS,
     datasets: [

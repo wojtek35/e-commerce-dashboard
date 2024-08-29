@@ -4,6 +4,7 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { MONTHS } from "@/shared/constants/months";
+import { FC } from "react";
 
 interface IPDFDownloadButtonProps {
     product: {
@@ -21,12 +22,23 @@ interface IPDFDownloadButtonProps {
  *
  * @param {object} product - The product object containing data used to generate the PDF report.
  */
-const PDFDownloadButton = ({ product }: IPDFDownloadButtonProps) => {
+const PDFDownloadButton: FC<IPDFDownloadButtonProps> = ({ product }) => {
     
+    /**
+     * Generates and downloads a PDF report of the product data.
+     */
     const generatePDF = () => {
       const doc = new jsPDF();
       doc.text(`Product Report: ${product.name}`, 20, 10);
   
+      /**
+       * The `body` parameter provides the data for each row in the table:
+       * - Each row contains the month, sales for that month, conversion rate, and average rating.
+       * - Data is limited to 12 months.
+       * - `MONTHS[index]` provides the month name.
+       * - Sales and conversion rate are taken from `product.sales` and `product.conversionRate`
+       * - Average rating is computed as the mean of `product.reviewTrends`.
+       */
       autoTable(doc, {
         startY: 20,
         head: [["Month", "Sales", "Conversion Rate", "Average Rating"]],

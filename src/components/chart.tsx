@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ChartOptions } from "chart.js";
 
-interface ChartComponentProps {
+interface IChartProps {
   data: {
     labels: string[];
     datasets: {
@@ -16,7 +16,10 @@ interface ChartComponentProps {
   title: string;
 }
 
-const Chart: React.FC<ChartComponentProps> = ({ data, options, title }) => {
+/**
+ * A component that renders a line chart with a dynamic time frame.
+ */
+const Chart: React.FC<IChartProps> = ({ data, options, title }) => {
   const [timeFrame, setTimeFrame] = useState(12);
 
   const handleTimeFrameChange = (
@@ -25,6 +28,9 @@ const Chart: React.FC<ChartComponentProps> = ({ data, options, title }) => {
     setTimeFrame(parseInt(event.target.value, 10));
   };
 
+   /**
+   * Slices the chart data based on the selected time frame.
+   */
   const slicedData = {
     labels: data.labels.slice(0, timeFrame),
     datasets: data.datasets.map((dataset) => ({

@@ -10,6 +10,12 @@ interface SidebarContextType {
 
 export const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
+/**
+ * SidebarProvider Component
+ * 
+ * Provides the sidebar state and control functions to its child components through context.
+ * Allows control over sidebar open state
+ */
 export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -23,6 +29,14 @@ export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children })
   );
 };
 
+/**
+ * useSidebar Hook
+ * 
+ * Provides access to the sidebar context.
+ * Throws an error if used outside of a SidebarProvider.
+ * 
+ * @returns {SidebarContextType} The current value of the sidebar context.
+ */
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (!context) {
