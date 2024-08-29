@@ -1,6 +1,6 @@
 "use client";
 
-import { useSidebar } from "@/app/context/sidebar-context";
+import { useSidebar } from "@/context/sidebar-context";
 import React from "react";
 import { FaCog, FaSignOutAlt, FaBars } from "react-icons/fa";
 

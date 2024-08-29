@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { products } from "@/shared/mock/products";
 import { debounce } from "lodash"; // Make sure to install lodash for debounce
@@ -15,16 +15,17 @@ const ProductTable: React.FC = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const router = useRouter();
 
-  const debouncedSearch = debounce((term: string) => {
-    setDebouncedSearchTerm(term);
-  }, 300);
+  /*
+   Normally we would have much more data and most likely call an API 
+   when we search, so it is always better to debounce the filering to avoid many api calls
+  */
+  const debouncedSearch = debounce((value:string) => setDebouncedSearchTerm(value), 300)
 
-  useEffect(() => {
-    debouncedSearch(searchTerm);
-    return () => {
-      debouncedSearch.cancel();
-    };
-  }, [searchTerm, debouncedSearch]);
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const {value} = e.target
+    setSearchTerm(value);
+    debouncedSearch(value);
+  }
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
@@ -41,7 +42,7 @@ const ProductTable: React.FC = () => {
         placeholder="Search products..."
         className="mb-6 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={handleSearch}
       />
 
       {filteredProducts.length === 0 ? (

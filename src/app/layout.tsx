@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "./context/sidebar-context";
+import { SidebarProvider } from "../context/sidebar-context";
 import Sidebar from "@/components/sidebar";
 import Navbar from "@/components/navbar";
 

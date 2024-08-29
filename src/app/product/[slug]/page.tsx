@@ -2,8 +2,6 @@
 
 import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,6 +22,8 @@ import {
   calculateTotalSales,
 } from "@/shared/functions/calculate";
 import ScrollToTopButton from "@/components/scroll-to-top-button";
+import PDFDownloadButton from "@/components/pdf-download-button";
+import Comments from "@/components/comments";
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +35,7 @@ ChartJS.register(
   Legend
 );
 
+// Function imation a query that we would use to get product by slug
 function useGetProductBySlug(slug: string) {
   return products.find((product) => product.slug === slug) || null;
 }
@@ -62,29 +63,6 @@ export default function ProductDetailPage({
       </main>
     );
   }
-
-  const generatePDF = () => {
-    const doc = new jsPDF();
-    doc.text(`Product Report: ${product.name}`, 20, 10);
-
-    autoTable(doc, {
-      startY: 20,
-      head: [["Month", "Sales", "Conversion Rate", "Average Rating"]],
-      body: product.reviewTrends
-        .slice(0, 12)
-        .map((_, index) => [
-          MONTHS[index],
-          product.sales[index] || 0,
-          product.conversionRate[index] || 0,
-          (
-            product.reviewTrends.reduce((a, b) => a + b, 0) /
-            product.reviewTrends.length
-          ).toFixed(1),
-        ]),
-    });
-
-    doc.save(`product_report_${product.name}.pdf`);
-  };
 
   const chartOptions = {
     responsive: true,
@@ -184,29 +162,14 @@ export default function ProductDetailPage({
         />
       </div>
 
-      <div className="w-full mt-6 bg-white p-6 rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Latest Comments</h2>
-        <ul className="space-y-4">
-          {product.comments.slice(0, 5).map((comment, index) => (
-            <li key={index} className="border-b pb-4">
-              <p className="font-semibold text-lg">{comment.username}</p>
-              <p className="text-gray-700">{comment.commentText}</p>
-              <p className="text-sm text-gray-500 mt-1">{comment.datePosted}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Comments comments={product.comments}/>
 
-      <div className="flex my-6">
-        <button
-          onClick={generatePDF}
-          className="p-2 bg-primary-500 text-white rounded"
-        >
-          Download PDF
-        </button>
-      </div>
+      <PDFDownloadButton product={product}/>
 
       <ScrollToTopButton scrollRef={containerRef} />
     </div>
   );
 }
+
+
+
