@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -18,7 +18,6 @@ import { products } from "@/shared/mock/products";
 import { MONTHS } from "@/shared/constants/months";
 import Chart from "@/components/chart";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import classNames from "classnames";
 import {
   calculateAverageConversionRate,
   calculateAverageRating,
@@ -91,7 +90,7 @@ export default function ProductDetailPage({
     responsive: true,
     plugins: {
       legend: {
-        position: "top" as const,
+        position: "bottom" as const,
       },
       title: {
         display: true,
@@ -157,7 +156,7 @@ export default function ProductDetailPage({
         </div>
       </div>
 
-      <div className="w-full mt-6 grid gap-4 grid-cols-1 xl:grid-cols-2">
+      <div className="w-full mt-6 grid gap-4 grid-cols-1 2xl:grid-cols-2">
         <Chart
           title="Sales Over Time"
           data={getChartData(product.sales, "Sales", colors.sales)}
