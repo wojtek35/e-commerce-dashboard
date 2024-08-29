@@ -33,7 +33,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
 function useGetProductBySlug(slug: string) {
@@ -54,7 +54,7 @@ export default function ProductDetailPage({
   const { slug } = params;
   const product = useGetProductBySlug(slug);
   const router = useRouter();
-  const mainRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   if (!product) {
     return (
@@ -113,9 +113,9 @@ export default function ProductDetailPage({
   });
 
   return (
-    <main
-      ref={mainRef}
-      className="flex flex-col items-center justify-between p-24 overflow-auto max-h-full relative"
+    <div
+      ref={containerRef}
+      className="flex flex-col items-center justify-between p-4 lg:p-8 xl:p-24 relative overflow-auto max-h-full"
     >
       <div className="w-full flex items-center mb-4 space-x-6">
         <button
@@ -128,7 +128,7 @@ export default function ProductDetailPage({
       </div>
 
       <div className="w-full bg-white p-6 rounded shadow-md mb-8">
-        <div className="grid grid-cols-2 gap-4 text-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-lg">
           <div className="p-4 bg-gray-100 rounded shadow">
             <p className="font-semibold">Price:</p>
             <p>${product.price.toFixed(2)}</p>
@@ -145,7 +145,7 @@ export default function ProductDetailPage({
             <p className="font-semibold">Average Conversion Rate:</p>
             <p>
               {calculateAverageConversionRate(product.conversionRate).toFixed(
-                1,
+                1
               )}
               %
             </p>
@@ -157,7 +157,7 @@ export default function ProductDetailPage({
         </div>
       </div>
 
-      <div className="w-full mt-6 grid gap-4 grid-cols-1 lg:grid-cols-2">
+      <div className="w-full mt-6 grid gap-4 grid-cols-1 xl:grid-cols-2">
         <Chart
           title="Sales Over Time"
           data={getChartData(product.sales, "Sales", colors.sales)}
@@ -169,7 +169,7 @@ export default function ProductDetailPage({
           data={getChartData(
             product.conversionRate,
             "Conversion Rate (%)",
-            colors.conversionRate,
+            colors.conversionRate
           )}
           options={chartOptions}
         />
@@ -179,7 +179,7 @@ export default function ProductDetailPage({
           data={getChartData(
             product.reviewTrends,
             "Average Rating",
-            colors.reviewTrends,
+            colors.reviewTrends
           )}
           options={chartOptions}
         />
@@ -207,7 +207,7 @@ export default function ProductDetailPage({
         </button>
       </div>
 
-      <ScrollToTopButton scrollRef={mainRef} />
-    </main>
+      <ScrollToTopButton scrollRef={containerRef} />
+    </div>
   );
 }

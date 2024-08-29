@@ -34,7 +34,7 @@ const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ scrollRef }) => {
     <button
       onClick={scrollToTop}
       className={classNames(
-        "sticky bottom-0 bg-primary-500 text-white rounded-full p-3 shadow-lg transition-transform duration-300 ease-in-out",
+        "sticky bottom-4 md:bottom-0 bg-primary-500 text-white rounded-full p-3 shadow-lg transition-transform duration-300 ease-in-out",
         {
           "opacity-100 translate-y-0": showBackToTop,
           "opacity-0 translate-y-8": !showBackToTop,
