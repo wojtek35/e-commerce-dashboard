@@ -32,7 +32,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 // Function imitating a query that we would use to get product by slug
@@ -77,11 +77,6 @@ export default function ProductDetailPage({
     },
   };
 
-  /**
-   * Function to format chart data
-   * Prepares the data structure required by the Chart.js Line component,
-   * including labels and datasets with labels, data points, border, and background colors.
-   */
   const getChartData = (data: number[], label: string, color: string) => ({
     labels: MONTHS,
     datasets: [
@@ -127,7 +122,7 @@ export default function ProductDetailPage({
             <p className="font-semibold">Average Conversion Rate:</p>
             <p>
               {calculateAverageConversionRate(product.conversionRate).toFixed(
-                1
+                1,
               )}
               %
             </p>
@@ -151,7 +146,7 @@ export default function ProductDetailPage({
           data={getChartData(
             product.conversionRate,
             "Conversion Rate (%)",
-            colors.conversionRate
+            colors.conversionRate,
           )}
           options={chartOptions}
         />
@@ -161,20 +156,17 @@ export default function ProductDetailPage({
           data={getChartData(
             product.reviewTrends,
             "Average Rating",
-            colors.reviewTrends
+            colors.reviewTrends,
           )}
           options={chartOptions}
         />
       </div>
 
-      <Comments comments={product.comments}/>
+      <Comments comments={product.comments} />
 
-      <PDFDownloadButton product={product}/>
+      <PDFDownloadButton product={product} />
 
       <ScrollToTopButton scrollRef={containerRef} />
     </div>
   );
 }
-
-
-

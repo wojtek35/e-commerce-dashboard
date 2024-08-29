@@ -19,16 +19,19 @@ const ProductTable: React.FC = () => {
    Normally we would have much more data and most likely call an API 
    when we search, so it is always better to debounce the filering to avoid many api calls
   */
-  const debouncedSearch = debounce((value:string) => setDebouncedSearchTerm(value), 300)
+  const debouncedSearch = debounce(
+    (value: string) => setDebouncedSearchTerm(value),
+    300,
+  );
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const {value} = e.target
+    const { value } = e.target;
     setSearchTerm(value);
     debouncedSearch(value);
-  }
+  };
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+    product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
   );
 
   const handleRowClick = (slug: string) => {
@@ -100,7 +103,7 @@ const ProductTable: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 border-b">
                     {calculateAverageConversionRate(
-                      product.conversionRate
+                      product.conversionRate,
                     ).toFixed(1)}
                     %
                   </td>

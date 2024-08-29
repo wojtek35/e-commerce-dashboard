@@ -28,7 +28,7 @@ const Chart: React.FC<IChartProps> = ({ data, options, title }) => {
     setTimeFrame(parseInt(event.target.value, 10));
   };
 
-   /**
+  /**
    * Slices the chart data based on the selected time frame.
    */
   const slicedData = {

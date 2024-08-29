@@ -12,7 +12,7 @@ interface ScrollToTopButtonProps {
  * This component renders a button that appears when the user scrolls down within a specified
  * scrollable element. When clicked, the button smoothly scrolls the element back to the top.
  *
- * 
+ *
  * @param {React.RefObject<HTMLElement>} scrollRef - The reference to the scrollable element.
  * The button listens to this element's scroll events to determine when to show or hide.
  */

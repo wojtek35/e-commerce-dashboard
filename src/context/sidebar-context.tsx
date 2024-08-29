@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface SidebarContextType {
   isSidebarOpen: boolean;
@@ -8,22 +8,22 @@ interface SidebarContextType {
   closeSidebar: () => void;
 }
 
-export const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
+export const SidebarContext = createContext<SidebarContextType | undefined>(
+  undefined,
+);
 
-/**
- * SidebarProvider Component
- * 
- * Provides the sidebar state and control functions to its child components through context.
- * Allows control over sidebar open state
- */
-export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const SidebarProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
-    <SidebarContext.Provider value={{ isSidebarOpen, toggleSidebar, closeSidebar }}>
+    <SidebarContext.Provider
+      value={{ isSidebarOpen, toggleSidebar, closeSidebar }}
+    >
       {children}
     </SidebarContext.Provider>
   );
@@ -31,16 +31,16 @@ export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children })
 
 /**
  * useSidebar Hook
- * 
+ *
  * Provides access to the sidebar context.
  * Throws an error if used outside of a SidebarProvider.
- * 
+ *
  * @returns {SidebarContextType} The current value of the sidebar context.
  */
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
   if (!context) {
-    throw new Error('useSidebar must be used within a SidebarProvider');
+    throw new Error("useSidebar must be used within a SidebarProvider");
   }
   return context;
 };
