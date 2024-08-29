@@ -35,17 +35,9 @@ ChartJS.register(
   Legend,
 );
 
-// Function imitating a query that we would use to get product by slug
-function useGetProductBySlug(slug: string) {
-  return products.find((product) => product.slug === slug) || null;
-}
-
-const colors = {
-  sales: "rgb(75, 192, 192)",
-  conversionRate: "rgb(255, 99, 132)",
-  reviewTrends: "rgb(54, 162, 235)",
-};
-
+/**
+ * Product page displaying data for individual product
+ */
 export default function ProductDetailPage({
   params,
 }: {
@@ -170,3 +162,14 @@ export default function ProductDetailPage({
     </div>
   );
 }
+
+// Function imitating a query that we would use to get product by slug
+function useGetProductBySlug(slug: string) {
+  return products.find((product) => product.slug === slug) || null;
+}
+
+const colors = {
+  sales: "rgb(75, 192, 192)",
+  conversionRate: "rgb(255, 99, 132)",
+  reviewTrends: "rgb(54, 162, 235)",
+};
