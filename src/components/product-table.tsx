@@ -30,13 +30,22 @@ const ProductTable: React.FC = () => {
     debouncedSearch(value);
   };
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
-  );
-
   const handleRowClick = (slug: string) => {
     router.push(`/product/${slug}`);
   };
+
+  const memoizedProducts = useMemo(() => {
+    return products.map((product) => ({
+      ...product,
+      averageRating: calculateAverageRating(product.reviewTrends).toFixed(1),
+      totalSales: calculateTotalSales(product.sales).toFixed(2),
+      averageConversionRate: calculateAverageConversionRate(product.conversionRate).toFixed(1),
+    }));
+  }, [products]);
+
+  const filteredProducts = memoizedProducts.filter((product) =>
+    product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
+  );
 
   return (
     <div className="bg-gray-50 flex flex-col w-full h-full p-6">
@@ -96,15 +105,13 @@ const ProductTable: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 border-b">{product.inventory}</td>
                   <td className="px-6 py-4 border-b">
-                    {calculateAverageRating(product.reviewTrends).toFixed(1)}
+                    {product.averageRating}
                   </td>
                   <td className="px-6 py-4 border-b">
-                    ${calculateTotalSales(product.sales).toFixed(2)}
+                    ${product.totalSales}
                   </td>
                   <td className="px-6 py-4 border-b">
-                    {calculateAverageConversionRate(
-                      product.conversionRate,
-                    ).toFixed(1)}
+                    {product.averageConversionRate}
                     %
                   </td>
                 </tr>
